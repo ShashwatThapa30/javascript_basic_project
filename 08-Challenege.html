@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button onclick="
+    guess = 'heads'
+    playGuess(guess);
+    ">
+    Heads
+  </button>
+  <button onclick="
+  guess = 'tails'
+  playGuess(guess);
+  ">
+    Tails
+  </button>
+
+  <p class="result-p"></p>
+
+  <button onclick="
+     score.wins = 0;
+     score.losses = 0;
+     localStorage.removeItem('score');
+     ">
+      Reset Score
+     </button>
+
+  <script>
+    function para(ans){
+      document.querySelector('.result-p').innerHTML = `You Chose: ${guess}`;
+    }
+
+    let score = JSON.parse(localStorage.getItem('score')) || {
+        wins: 0,
+        losses: 0,
+        ties: 0
+      };
+
+    function computerMove(){
+
+      let randomNumber = Math.random();
+      let result = randomNumber < 0.5 ? 'heads' : 'tails';
+      return result;
+    }
+
+    let guess = '';
+    function playGuess(guess){
+      // console.log(guess === result ? 'You win!' : 'You lose!');
+      let ans='';
+      let result= computerMove();
+      if(guess === result){
+        ans='You Win';
+        score.wins+=1;
+      }
+      else{
+        ans='You loss';
+        score.losses+=1; 
+      }
+
+      para();
+
+      localStorage.setItem('score' , JSON.stringify(score));
+
+        alert(`You picked ${guess}, computer picked ${result}, ${ans}
+Wins: ${score.wins} , Losses: ${score.losses}`);
+    }
+    
+  </script>
+</body>
+</html>

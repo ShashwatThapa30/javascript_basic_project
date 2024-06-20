@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM Project</title>
+  <style>
+    .subscribe-button{
+      background: black;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 50px;
+    }
+    .is-subscribed{
+      background: rgb(231, 231, 231);
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .cost-input{
+      font-size: 15px;
+      padding: 10px;
+    }
+
+    .calculate-button{
+      padding: 12px;
+      border: none;
+      background: green;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <p>YouTube Subscibe Button</p>
+  <button onclick="
+  Subscibe();
+  " class="js-SubscribeButton subscribe-button">
+    Subscribe
+  </button>
+
+  <p>Amazon Shipping Calculator</p>
+
+  <input placeholder="Cost of Order" class="js-cost-input cost-input" onkeydown="
+  handleCostKeydown(event);
+  ">
+
+  <button onclick="
+  calculate();
+  " class="calculate-button">Calculate</button>
+
+  <p class="js-total-cost"></p>
+  <p class="js-error-message error-message"></p>
+
+  <input class="hey" type="text" placeholder="Type" onkeyup="
+  const input= document.querySelector('.hey');
+  // document.querySelector('.after').innerHTML= input.value;
+  Typing(input);
+  ">
+  <p class="after"></p>
+
+  <script>
+    function Typing(input){
+      let t= input.value;
+      document.querySelector('.after').innerHTML= t;
+    }
+
+    function handleCostKeydown(event){
+      if(event.key === 'Enter'){
+        calculate();
+      }
+    }
+
+    function calculate(){
+      const inputElement = document.querySelector('.js-cost-input');
+      let cost= Number(inputElement.value); 
+
+      document.querySelector('.js-total-cost')
+          .innerHTML = '';
+        document.querySelector('.js-error-message')
+          .innerHTML = '';
+
+      if (cost < 0) {
+          document.querySelector('.js-error-message')
+            .innerHTML = 'Error: cost cannot be less than $0';
+          // If we display an error, we can use return to
+          // end this function immediately. This is called
+          // an "early return" and it makes the code cleaner
+          // because it reduces nesting / indents.
+          return;
+        }
+
+      if(cost<40){
+        cost= (cost*100)+1000;
+        // cost+=10;
+      }
+
+      document.querySelector('.js-total-cost').innerHTML= `$${cost/100}`;
+    }
+
+    function Subscibe(){
+      const buttonElement = document.querySelector('.js-SubscribeButton');
+
+      if(buttonElement.innerText ==='Subscribe') {
+        buttonElement.innerHTML = 'Subscribed';
+        buttonElement.classList.add('is-subscribed');
+      } else {
+        buttonElement.innerHTML = 'Subscribe';
+        buttonElement.classList.remove('is-subscribed');
+      }
+    }
+  </script>
+</body>
+</html>
